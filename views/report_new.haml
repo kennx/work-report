@@ -1,0 +1,53 @@
+!!!5
+
+%html
+  %head
+    %script{:src => 'http://juo/js-lib/jquery-1.8.min.js'}
+    %script{:src => 'http://juo/js-lib/bootstrap/js/bootstrap.min.js'}
+    %script{:src => 'http://juo/js-lib/bootstrap/js/bootstrap-datepicker.js'}
+    %script{:src => '/js/report.js'}
+    %link{:rel => 'stylesheet', :href => '/styles/index.css'}
+    %link{:rel => 'stylesheet', :href => 'http://juo/js-lib/bootstrap/css/bootstrap.min.css'}
+    %link{:rel => 'stylesheet', :href => 'http://juo/js-lib/bootstrap/datepicker/datepicker.css'}
+
+  %body.bg
+  
+    = haml :header
+
+    .container
+      .row{:style => 'background-image: url("/images/bg.png");box-shadow: -2px 4px 5px rgba(0,0,0,.5);'}
+        = haml :leftside
+
+        .span9.maincontent{:style => 'margin-left:0px;background-color:#FFFFFF;width:80%;min-height:300px;'}
+          .title= "Modify #{@date} work plan"
+          .container-fluid{:style => 'margin:10px;padding:0px;',:class => "form-horizontal"}
+            .row-fluid 
+              .span12
+                %form{:action => '/report/new', :method => 'post'}
+                  %input{:type => 'hidden', :name => 'report[order]', :value => @order}
+                  %input{:type => 'hidden', :name => 'report[audited]', :value => false}
+                  %input{:type => 'hidden', :name => 'report[team]', :value => @auth.team._id}
+                  .control-group 
+                    .control-label Start Date
+                    .controls 
+                      %input#sd.input-xlarge{:type => "text", :name => 'report[startDate]','data-date-format'=>'yyyy-mm-dd', :value => Date.today}
+                  .control-group 
+                    .control-label End Date
+                    .controls 
+                      %input#ed.input-xlarge{:type => "text",'data-date-format'=>'yyyy-mm-dd', :name => 'report[endDate]'}
+                  .control-group 
+                    .control-label Note
+                    .controls 
+                      %textarea.input-xlarge{:rows => '6', :name => 'report[note]', :cols => 80}
+                  .control-group 
+                    .controls
+                      %input{:type => 'submit', :class => 'btn btn-small btn-primary', :value => 'Submit'}
+
+            
+    .container{:style => 'margin-top:20px;'}
+      .row 
+        %span12 
+
+            
+
+        

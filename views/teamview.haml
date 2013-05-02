@@ -1,0 +1,77 @@
+!!!5
+
+%html
+  %head
+    %script{:src => 'http://juo/js-lib/jquery-1.9.1.min.js'}
+    %script{:src => 'http://juo/js-lib/bootstrap/js/bootstrap.min.js'}
+    %link{:rel => 'stylesheet', :href => '/styles/index.css'}
+    %link{:rel => 'stylesheet', :href => 'http://juo/js-lib/bootstrap/css/bootstrap.min.css'}
+  %body.bg
+  
+    = haml :header
+
+    .container
+      .row{:style => 'background-image: url("images/bg.png");box-shadow: -2px 4px 5px rgba(0,0,0,.5);'}
+      
+        = haml :leftside
+
+        .span10.maincontent{:style => 'margin-left:0px;background-color:#FFFFFF;width:80%;min-height:300px;'}
+          .title This week work plan
+          .container-fluid{:style => 'margin:10px;padding:0px;'}
+            .row-fluid
+              .panel
+                .panel-title Note
+                .panel-content= @last_rep.note
+
+            .row-fluid
+              .row-fluid
+                .span6{:style => 'text-align:right;'}
+                  - if @has_prev
+                    %a{:href => "?order=#{@order - 1}"} 
+                      %i.icon-chevron-left{:style => 'margin-top: 1px;'}
+                      Prev
+                  -else
+                    &nbsp;
+                .span6 
+                  - if @has_next
+                    %a{:href => "?order=#{@order + 1}"}
+                      Next
+                      %i.icon-chevron-right{:style => 'margin-top: 1px;'}
+            - @reps_by_date.each do |date,item|
+              .row-fluid
+                .span12
+                  
+                  %table.table.table-bordered.table-striped.table-condensed.time-date{:colspan => 4} 
+                    %thead
+                      %tr.item-date
+                        %td.item-date-title{:colspan => 4,:style=>'padding:1px 0 1px 10px;border-bottom:none;text-align:left;font-weight:bold;'} 
+                          %a{:href => "/report/edit/#{date.to_s}/#{@last_rep._id}", :style=>'', :class => 'item-list-edit'} 
+                            %i.icon-edit
+                          &nbsp;
+                          %span{:style => 'line-height:20px;color:#0088CC'}= date
+                          
+                      %tr.table-head
+                        %th{:style=>'padding:1px 0 1px 10px;border-top:none;'}  User
+                        %th{:style=>'padding:1px 0 1px 10px;border-top:none;'}  Plan
+                        %th{:style=>'padding:1px 0 1px 10px;border-top:none;'}  Complete
+                        %th{:style=>'padding:1px 0 1px 0;border-top:none;'}  Audit
+                    %tbody
+                      - unless item.nil?
+                        - item.each do |ri|
+                          %tr
+                            %td{:style => 'color:#807F7F;padding-left:10px;', :width => '9%'}= ri.author.name
+                            %td{:style => 'color:#807F7F;padding-left:10px;', :width => '50%'}= ri.plan         
+                            %td{:style => 'color:#807F7F;padding-left:10px;', :width => '40%'}= ri.complete     
+                            %td{:style => 'color:#807F7F;text-align:center;'}
+                              - if ri.audit  
+                                %span.icon-ok-circle
+                              - else
+                                %span.icon-ban-circle
+
+
+    .container{:style => 'margin-top:20px;'}
+      .row 
+        %span12 
+            
+
+        

@@ -1,0 +1,43 @@
+!!!5
+
+%html
+  %head
+    %script{:src => 'http://juo/js-lib/jquery-1.9.1.min.js'}
+    %script{:src => 'http://juo/js-lib/bootstrap/js/bootstrap.min.js'}
+    %link{:rel => 'stylesheet', :href => '/styles/index.css'}
+    %link{:rel => 'stylesheet', :href => 'http://juo/js-lib/bootstrap/css/bootstrap.min.css'}
+  %body.bg
+  
+    = haml :header
+
+    .container
+      .row{:style => 'background-image: url("images/bg.png");box-shadow: -2px 4px 5px rgba(0,0,0,.5);'}
+      
+        = haml :leftside
+
+        .span10.maincontent{:style => 'margin-left:0px;background-color:#FFFFFF;width:80%;min-height:300px;'}
+          .title Home
+          .container-fluid{:style => 'margin:10px;padding:0px;'}
+            - unless @today_plan.nil?
+              .row-fluid
+                .span12
+                  .panel.span4
+                    .panel-title Today plan
+                    .panel-content= @today_plan.plan
+                  .panel.span4
+                    .panel-title Note of this week workplan
+                    .panel-content= @last_rep.note
+              .row-fluid
+                .span12
+                  .panel.span4
+                    .panel-title Yesterday completed
+                    .panel-content= @today_plan.plan
+            - else
+              .row-fluid
+                .span12
+                  .alert.alert-info Please contact the team leader to create a week's work report
+
+    = haml :bottom
+            
+
+        
